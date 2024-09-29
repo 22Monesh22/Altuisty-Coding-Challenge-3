@@ -1,0 +1,26 @@
+import java.util.*;
+public class MaxOfMins {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int k = input.nextInt();
+        int n = input.nextInt();
+        int[] nums = new int[n];
+        for (int i = 0; i<n; i++) {
+            nums[i] = input.nextInt();
+        }
+        Deque<Integer> dq = new ArrayDeque<>();
+        List<Integer> minValues = new ArrayList<>();
+        for (int i = 0; i<n;i++) {
+            while (!dq.isEmpty() && dq.peekFirst() <= i - k) {
+                dq.pollFirst();
+            }
+            while (!dq.isEmpty() && nums[dq.peekLast()] >= nums[i]) {
+                dq.pollLast();
+            }
+            dq.offerLast(i);
+            if (i >= k - 1) {
+                minValues.add(nums[dq.peekFirst()]);
+            }}
+        int maxMin = Collections.max(minValues);
+        System.out.println(maxMin);
+    }}
